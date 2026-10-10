@@ -11,18 +11,3 @@ fun main() {
     document.body!!.appendMessage(message)
 }
 
-private val prettyPrintOptions = PrettyPrintJsonOptions(
-    trailingCommas = false,
-    quoteKeys = true,
-)
-
-fun Element.appendMessage(message: Message) {
-    val jsonContainer = document.createElement("div").apply {
-        innerHTML = HtmlJsonConverter.toHtml(
-            message,
-            prettyPrintOptions
-        )
-    }
-
-    appendChild(jsonContainer)
-}

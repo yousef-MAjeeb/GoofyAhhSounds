@@ -27,7 +27,6 @@ kotlin {
         }
         jsMain.dependencies {
             implementation(libs.kotlinx.browser)
-            implementation(npm("pretty-print-json", "3.0.5"))
         }
     }
 }
