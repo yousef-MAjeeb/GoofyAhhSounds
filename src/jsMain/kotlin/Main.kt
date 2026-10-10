@@ -1,13 +1,19 @@
-import org.w3c.dom.Element
 import kotlinx.browser.document
-import kotlinx.serialization.Serializable
-
-@JsExport
-@Serializable
-data class Message(val topic: String, val content: String)
+import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
 
 fun main() {
-    val message = Message(topic = "Kotlin/JS", content = "Hello!")
-    document.body!!.appendMessage(message)
-}
+    val fileInput = document.getElementById("fileInput") as HTMLInputElement
+    val status = document.getElementById("status") as HTMLElement
+    val playBtn = document.getElementById("playButton") as HTMLButtonElement
 
+    fileInput.addEventListener("change", {
+        val file = fileInput.files?.item(0)
+        if (file != null) {
+            status.textContent = file.name
+        } else {
+            status.textContent = "No sound selected"
+        }
+    })
+}
