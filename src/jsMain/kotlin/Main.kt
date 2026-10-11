@@ -3,7 +3,6 @@ import org.w3c.dom.Audio
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.url.URL
 import org.w3c.files.File
 import org.w3c.files.FileReader
 
@@ -13,6 +12,7 @@ fun main() {
     val playBtn = document.getElementById("playButton") as HTMLButtonElement
     var selectedFile: File? = null
     val fReader: FileReader = FileReader()
+    var savedData: String? = null
 
     fReader.onload = {
         val dataUrltext = fReader.result.toString()
@@ -20,6 +20,7 @@ fun main() {
         data.soundName = selectedFile?.name
         data.soundData = dataUrltext
         chrome.storage.local.set(data)
+        savedData = dataUrltext
         status.textContent = "${selectedFile?.name} (${dataUrltext.length} chars)"
     }
 
@@ -39,10 +40,17 @@ fun main() {
     })
 
     playBtn.addEventListener("click", {
-        val file = selectedFile
+        val file = savedData
         if (file != null) {
-            val url = URL.createObjectURL(file)
-            Audio(url).play()
+            Audio(file).play()
+        }
+    })
+
+    chrome.storage.local.get(arrayOf("soundName","soundData"), { result ->
+        if (result.soundName != null){
+            status.textContent = result.soundName
+            playBtn.disabled = false
+            savedData = result.soundData.toString()
         }
     })
 }
