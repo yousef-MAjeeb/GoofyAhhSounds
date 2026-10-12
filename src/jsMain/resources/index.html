@@ -24,13 +24,41 @@
             padding: 8px;
             font-size: 14px;
         }
+        #settings {
+            margin-top: 14px;
+            font-size: 13px;
+        }
+        #settings h2 {
+            font-size: 14px;
+            margin: 0 0 6px 0;
+        }
+        #keyBox {
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 6px;
+            padding: 6px;
+        }
     </style>
 </head>
 <body>
-    <h1>GoofyAhhSounds</h1>
-    <input type="file" id="fileInput" accept="audio/*">
-    <div id="status">No sound selected</div>
-    <button id="playButton" disabled>Play</button>
-    <script type="module" src="kmp-js-wizard.js"></script>
+<h1>GoofyAhhSounds</h1>
+<input type="file" id="fileInput" accept="audio/*">
+<div id="status">No sound selected</div>
+<button id="playButton" disabled>Play</button>
+
+<div id="settings">
+    <h2>Trigger</h2>
+    <div>
+        <input type="radio" id="modeSingle" name="mode" value="single" checked>
+        <label for="modeSingle">Single key</label>
+    </div>
+    <div>
+        <input type="radio" id="modeAll" name="mode" value="all">
+        <label for="modeAll">All keys</label>
+    </div>
+    <input type="text" id="keyBox" readonly placeholder="Click here, then press a key">
+</div>
+
+<script type="module" src="kmp-js-wizard.js"></script>
 </body>
 </html>
