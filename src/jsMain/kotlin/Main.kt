@@ -54,13 +54,38 @@ fun main() {
         val keyEvent = event as KeyboardEvent
         keyBox.value = keyEvent.key
         keyEvent.preventDefault()
+
+        val data: dynamic = js("({})")
+        data.triggerKey = keyEvent.key
+        chrome.storage.local.set(data)
     })
 
-    chrome.storage.local.get(arrayOf("soundName","soundData"), { result ->
+    modeSingle.addEventListener("change", {
+        val data: dynamic = js("({})")
+        data.mode = "single"
+        chrome.storage.local.set(data)
+        keyBox.disabled = false
+    })
+
+    modeAll.addEventListener("change", {
+        val data: dynamic = js("({})")
+        data.mode = "all"
+        chrome.storage.local.set(data)
+        keyBox.disabled = true
+    })
+
+    chrome.storage.local.get(arrayOf("soundName","soundData","triggerKey","mode"), { result ->
         if (result.soundName != null){
             status.textContent = result.soundName
             playBtn.disabled = false
             savedData = result.soundData.toString()
+        }
+        if (result.triggerKey != null){
+            keyBox.value = result.triggerKey.toString()
+        }
+        if (result.mode == "all"){
+            modeAll.checked = true
+            keyBox.disabled = true
         }
     })
 }
