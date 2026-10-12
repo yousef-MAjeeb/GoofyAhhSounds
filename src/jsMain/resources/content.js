@@ -11,6 +11,20 @@ chrome.storage.local.get(["soundData", "mode", "triggerKey"], (result) => {
     if (result.triggerKey) triggerKey = result.triggerKey;
 });
 
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== "local") return;
+
+    if (changes.soundData) {
+        soundData = changes.soundData.newValue || null;
+    }
+    if (changes.mode) {
+        mode = changes.mode.newValue || "single";
+    }
+    if (changes.triggerKey) {
+        triggerKey = changes.triggerKey.newValue || null;
+    }
+});
+
 document.addEventListener("keydown", (event) => {
     if (!soundData) return;
 
