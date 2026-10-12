@@ -10,9 +10,15 @@
         "storage",
         "unlimitedStorage"
     ],
-    "browser_specific_settings":{
+    "browser_specific_settings": {
         "gecko": {
             "id": "goofyahhsounds@hero"
         }
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
 }
