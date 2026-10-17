@@ -1,4 +1,5 @@
 import kotlinx.browser.document
+import kotlinx.browser.window
 import org.w3c.dom.Audio
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
@@ -8,7 +9,11 @@ import org.w3c.files.File
 import org.w3c.files.FileReader
 
 fun main() {
+    val isFirefox = window.navigator.userAgent.contains("Firefox")
+    val isPickerWindow = window.location.search.contains("picker=1")
+
     val fileInput = document.getElementById("fileInput") as HTMLInputElement
+    val chooseBtn = document.getElementById("chooseButton") as HTMLButtonElement
     val status = document.getElementById("status") as HTMLElement
     val playBtn = document.getElementById("playButton") as HTMLButtonElement
     var selectedFile: File? = null
@@ -17,6 +22,11 @@ fun main() {
     val keyBox = document.getElementById("keyBox") as HTMLInputElement
     val modeSingle = document.getElementById("modeSingle") as HTMLInputElement
     val modeAll = document.getElementById("modeAll") as HTMLInputElement
+
+    if (isFirefox && !isPickerWindow) {
+        fileInput.hidden = true
+        chooseBtn.hidden = false
+    }
 
     fReader.onload = {
         val dataUrltext = fReader.result.toString()
