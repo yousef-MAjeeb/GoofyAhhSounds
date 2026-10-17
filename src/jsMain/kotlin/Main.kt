@@ -53,6 +53,15 @@ fun main() {
         }
     })
 
+    chooseBtn.addEventListener("click", {
+        val options: dynamic = js("({})")
+        options.url = chrome.runtime.getURL("index.html?picker=1")
+        options.type = "popup"
+        options.width = 320
+        options.height = 260
+        chrome.windows.create(options)
+    })
+
     playBtn.addEventListener("click", {
         val file = savedData
         if (file != null) {
