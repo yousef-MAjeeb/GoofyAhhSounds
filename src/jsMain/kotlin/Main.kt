@@ -33,7 +33,9 @@ fun main() {
         val data: dynamic = js("({})")
         data.soundName = selectedFile?.name
         data.soundData = dataUrltext
-        chrome.storage.local.set(data)
+        chrome.storage.local.set(data, {
+            if (isPickerWindow) window.close()
+        })
         savedData = dataUrltext
         status.textContent = "${selectedFile?.name} (${dataUrltext.length} chars)"
     }

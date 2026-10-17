@@ -1,5 +1,6 @@
 external interface StorageArea {
     fun set(items: dynamic)
+    fun set(items: dynamic, callback: () -> Unit)
     fun get(keys: dynamic, callback: (dynamic) -> Unit)
 }
 
