@@ -7,8 +7,18 @@ external interface ChromeStorage {
     val local: StorageArea
 }
 
+external interface ChromeWindows {
+    fun create(options: dynamic)
+}
+
+external interface ChromeRuntime {
+    fun getURL(path: String): String
+}
+
 external interface Chrome {
     val storage: ChromeStorage
+    val windows: ChromeWindows
+    val runtime: ChromeRuntime
 }
 
 external val chrome: Chrome
