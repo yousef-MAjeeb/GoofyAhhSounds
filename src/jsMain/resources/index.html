@@ -19,7 +19,7 @@
             font-size: 13px;
             word-break: break-all;
         }
-        #playButton {
+        #playButton, #chooseButton {
             width: 100%;
             padding: 8px;
             font-size: 14px;
@@ -43,6 +43,7 @@
 <body>
 <h1>GoofyAhhSounds</h1>
 <input type="file" id="fileInput" accept="audio/*">
+<button id="chooseButton" hidden>Choose sound</button>
 <div id="status">No sound selected</div>
 <button id="playButton" disabled>Play</button>
 
