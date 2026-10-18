@@ -16,13 +16,14 @@ fun main() {
     val chooseBtn = document.getElementById("chooseButton") as HTMLButtonElement
     val status = document.getElementById("status") as HTMLElement
     val playBtn = document.getElementById("playButton") as HTMLButtonElement
-    var selectedFile: File? = null
-    val fReader: FileReader = FileReader()
-    var savedData: String? = null
     val keyBox = document.getElementById("keyBox") as HTMLInputElement
     val modeSingle = document.getElementById("modeSingle") as HTMLInputElement
     val modeAll = document.getElementById("modeAll") as HTMLInputElement
     val clearKeyBtn = document.getElementById("clearKeyButton") as HTMLButtonElement
+    var selectedFile: File? = null
+    val fReader: FileReader = FileReader()
+    var savedData: String? = null
+    var player: Audio? = null
 
     if (isFirefox && !isPickerWindow) {
         fileInput.hidden = true
@@ -30,6 +31,14 @@ fun main() {
     }
 
     fReader.onload = {
+        val old = player
+        if (old != null) {
+            old.pause()
+            old.currentTime = 0.0
+            player = null
+            playBtn.textContent = "Play"
+        } // stop the old sound when a new file is saved/uploaded
+        
         val dataUrltext = fReader.result.toString()
         val data: dynamic = js("({})")
         data.soundName = selectedFile?.name
@@ -66,9 +75,20 @@ fun main() {
     })
 
     playBtn.addEventListener("click", {
+        val current = player
         val file = savedData
-        if (file != null) {
-            Audio(file).play()
+        if (current != null && !current.paused){
+            current.pause()
+            current.currentTime = 0.0
+            playBtn.textContent = "Play"
+        } else if (file != null) {
+            val audio = Audio(file)
+            audio.onended = {
+                playBtn.textContent = "Play"
+            }
+            player = audio
+            audio.play()
+            playBtn.textContent = "Stop"
         }
     })
 
