@@ -22,6 +22,7 @@ fun main() {
     val keyBox = document.getElementById("keyBox") as HTMLInputElement
     val modeSingle = document.getElementById("modeSingle") as HTMLInputElement
     val modeAll = document.getElementById("modeAll") as HTMLInputElement
+    val clearKeyBtn = document.getElementById("clearKeyButton") as HTMLButtonElement
 
     if (isFirefox && !isPickerWindow) {
         fileInput.hidden = true
@@ -79,6 +80,11 @@ fun main() {
         val data: dynamic = js("({})")
         data.triggerKey = keyEvent.key
         chrome.storage.local.set(data)
+    })
+    
+    clearKeyBtn.addEventListener("click", {
+        chrome.storage.local.remove("triggerKey")
+        keyBox.value = ""
     })
 
     modeSingle.addEventListener("change", {
