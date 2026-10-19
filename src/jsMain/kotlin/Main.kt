@@ -30,6 +30,10 @@ fun main() {
         chooseBtn.hidden = false
     }
 
+    if (isPickerWindow) {
+        document.body?.classList?.add("picker")
+    }
+
     fReader.onload = {
         val old = player
         if (old != null) {
