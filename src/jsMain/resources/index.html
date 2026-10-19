@@ -3,63 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>GoofyAhhSounds</title>
-    <style>
-        body {
-            width: 260px;
-            margin: 0;
-            padding: 12px;
-            font-family: sans-serif;
-        }
-        h1 {
-            font-size: 16px;
-            margin: 0 0 10px 0;
-        }
-        #status {
-            margin: 10px 0;
-            font-size: 13px;
-            word-break: break-all;
-        }
-        #playButton, #chooseButton {
-            width: 100%;
-            padding: 8px;
-            font-size: 14px;
-        }
-        #settings {
-            margin-top: 14px;
-            font-size: 13px;
-        }
-        #settings h2 {
-            font-size: 14px;
-            margin: 0 0 6px 0;
-        }
-        #keyBox {
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: 6px;
-            padding: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>GoofyAhhSounds</h1>
-<input type="file" id="fileInput" accept="audio/*">
-<button id="chooseButton" hidden>Choose sound</button>
-<div id="status">No sound selected</div>
-<button id="playButton" disabled>Play</button>
+<header class="app-header">
+    <span class="app-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 9v6h4l5 4V5L8 9z"/>
+            <path d="M16.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M19 6a8.5 8.5 0 0 1 0 12"/>
+        </svg>
+    </span>
+    <h1>GoofyAhhSounds</h1>
+</header>
 
-<div id="settings">
-    <h2>Trigger</h2>
+<section class="card" aria-label="Current sound">
     <div>
+        <span class="label">Current sound</span>
+        <div id="status">No sound selected</div>
+    </div>
+    <button id="playButton" class="btn filled" disabled>Play</button>
+</section>
+
+<div class="chooser">
+    <input type="file" id="fileInput" accept="audio/*">
+    <button id="chooseButton" class="btn tonal" hidden>Choose sound</button>
+</div>
+
+<section id="settings">
+    <h2 class="label">Trigger</h2>
+    <div class="segmented" role="radiogroup" aria-label="Trigger mode">
         <input type="radio" id="modeSingle" name="mode" value="single" checked>
         <label for="modeSingle">Single key</label>
-    </div>
-    <div>
         <input type="radio" id="modeAll" name="mode" value="all">
         <label for="modeAll">All keys</label>
     </div>
-    <input type="text" id="keyBox" readonly placeholder="Click here, then press a key">
-    <button id="clearKeyButton">Clear key</button>
-</div>
+
+    <div class="field">
+        <input type="text" id="keyBox" readonly placeholder="Click here, then press a key">
+        <label for="keyBox">Trigger key</label>
+        <svg class="field-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>
+        </svg>
+    </div>
+
+    <div class="field-actions">
+        <button id="clearKeyButton" class="btn text">Clear key</button>
+    </div>
+</section>
 
 <script type="module" src="GoofyAhhSounds.js"></script>
 </body>
