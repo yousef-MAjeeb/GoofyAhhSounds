@@ -1,390 +1,223 @@
-/* To recolor the whole popup, change the values in :root and the dark block.
-The Material Theme Builder can generate a matching set from any seed color. */
-
+/* Recolor by editing the variables. */
 :root {
     color-scheme: light dark;
-
-    --primary: #6750A4;
-    --on-primary: #FFFFFF;
-    --primary-container: #EADDFF;
-    --on-primary-container: #21005D;
-    --secondary-container: #E8DEF8;
-    --on-secondary-container: #1D192B;
-    --surface: #FEF7FF;
-    --surface-container: #F3EDF7;
-    --on-surface: #1D1B20;
-    --on-surface-variant: #49454F;
-    --outline: #79747E;
-
-    --check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+    --bg: #E8E0FF;
+    --card: #FFFFFF;
+    --ink: #1B1530;
+    --muted: #5B5278;
+    --pop: #FFD23F;
+    --on-pop: #1B1530;
+    --focus: #6A4AF0;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary: #D0BCFF;
-        --on-primary: #381E72;
-        --primary-container: #4F378B;
-        --on-primary-container: #EADDFF;
-        --secondary-container: #4A4458;
-        --on-secondary-container: #E8DEF8;
-        --surface: #141218;
-        --surface-container: #211F26;
-        --on-surface: #E6E0E9;
-        --on-surface-variant: #CAC4D0;
-        --outline: #938F99;
+        --bg: #17122A;
+        --card: #241C3D;
+        --ink: #F1ECFF;
+        --muted: #B7ADD6;
+        --focus: #FFD23F;
     }
 }
 
-/* Base */
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-/* Keeps the hidden attribute working even where a rule sets display. */
-[hidden] {
-    display: none !important;
-}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2 { margin: 0; }
 
 body {
+    display: grid;
+    gap: 12px;
     width: 320px;
     margin: 0;
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: var(--surface);
-    color: var(--on-surface);
-    font-family: Roboto, system-ui, "Segoe UI", sans-serif;
-    font-size: 14px;
-    line-height: 20px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 14px/20px "Trebuchet MS", system-ui, sans-serif;
 }
 
-:focus-visible {
-    outline: 2px solid var(--primary);
+:focus-visible { 
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
 }
 
-/* Header */
-
-.app-header {
+.app-header { 
     display: flex;
     align-items: center;
     gap: 12px;
-    height: 40px;
+}
+h1 { 
+    font-size: 21px; 
+    font-weight: 800; 
+    letter-spacing: -0.3px; 
 }
 
 .app-mark {
+    display: grid;
+    place-items: center;
     width: 40px;
     height: 40px;
+    background: var(--pop);
+    color: var(--on-pop);
+    border: 2px solid var(--ink);
     border-radius: 12px;
-    background: var(--primary-container);
-    color: var(--on-primary-container);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 3px 3px 0 var(--ink);
+    transform: rotate(-6deg);
 }
 
-h1 {
-    margin: 0;
-    font-size: 22px;
-    line-height: 28px;
-    font-weight: 500;
+.label, .field label { 
+    font-size: 12px; 
+    font-weight: 700; 
+    color: var(--muted); 
 }
-
-.label {
-    display: block;
-    margin: 0;
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 500;
-    letter-spacing: 0.4px;
-    color: var(--on-surface-variant);
-}
-
-/* Sound card */
 
 .card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 12px;
-    padding: 16px;
-    border-radius: 20px;
-    background: var(--surface-container);
+    padding: 14px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    box-shadow: 4px 4px 0 var(--ink);
 }
 
-#status {
-    margin-top: 4px;
-    font-size: 16px;
-    line-height: 24px;
-    word-break: break-all;
+#status { 
+    font-size: 16px; 
+    font-weight: 700; 
+    word-break: break-all; 
 }
 
-/* Buttons */
-
-.btn {
-    height: 48px;
-    padding: 0 24px;
-    border: 0;
-    border-radius: 24px;
-    width: 100%;
-    font: inherit;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    cursor: pointer;
-    transition: background-color 150ms, box-shadow 150ms;
-}
-
-.filled {
-    background-color: var(--primary);
-    color: var(--on-primary);
-    --state: var(--on-primary);
-}
-
-.tonal {
-    background-color: var(--secondary-container);
-    color: var(--on-secondary-container);
-    --state: var(--on-secondary-container);
-}
-
-.text {
-    width: auto;
+/* Buttons (the file input's button shares the look) */
+.btn, ::file-selector-button {
     height: 44px;
-    padding: 0 16px;
-    background-color: transparent;
-    color: var(--primary);
-    --state: var(--primary);
-}
-
-.btn:hover:not(:disabled) {
-    background-image: linear-gradient(
-        color-mix(in srgb, var(--state) 8%, transparent),
-        color-mix(in srgb, var(--state) 8%, transparent)
-    );
-}
-
-.btn:active:not(:disabled) {
-    background-image: linear-gradient(
-        color-mix(in srgb, var(--state) 12%, transparent),
-        color-mix(in srgb, var(--state) 12%, transparent)
-    );
-}
-
-.btn:disabled {
-    background-color: color-mix(in srgb, var(--on-surface) 12%, transparent);
-    color: color-mix(in srgb, var(--on-surface) 38%, transparent);
-    cursor: not-allowed;
-}
-
-/* File input (Brave and Chromium popup) */
-
-.chooser {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-#fileInput {
-    width: 100%;
-    font-size: 13px;
-    color: var(--on-surface-variant);
-}
-
-#fileInput::file-selector-button {
-    height: 40px;
-    margin-right: 12px;
-    padding: 0 20px;
-    border: 0;
-    border-radius: 20px;
-    background-color: var(--secondary-container);
-    color: var(--on-secondary-container);
+    padding: 0 18px;
+    background: var(--card);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink);
     font: inherit;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
 }
+.btn { width: 100%; }
+::file-selector-button { margin-right: 12px; }
+.filled { 
+    background: var(--pop);
+    color: var(--on-pop); 
+}
+.btn:enabled:not(.text):hover { 
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+.btn:enabled:not(.text):active { 
+    transform: translate(3px, 3px); 
+    box-shadow: none; 
+}
+.btn:disabled { 
+    opacity: 0.5; 
+    box-shadow: none; 
+    cursor: not-allowed; 
+}
+.text { 
+    width: auto; 
+    height: auto; 
+    padding: 4px 0; 
+    background: none; 
+    border: 0; 
+    box-shadow: none; 
+    text-decoration: underline; 
+}
 
-#fileInput::file-selector-button:hover {
-    background-image: linear-gradient(
-        color-mix(in srgb, var(--on-secondary-container) 8%, transparent),
-        color-mix(in srgb, var(--on-secondary-container) 8%, transparent)
-    );
+.chooser { 
+    display: grid; 
+    gap: 8px; 
+}
+#fileInput { 
+    width: 100%; 
+    font-size: 13px; 
+    color: var(--muted); 
 }
 
 /* Trigger settings */
-
-#settings {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
+#settings { 
+    display: grid; 
+    gap: 10px; 
+    margin-top: 4px; 
 }
-
-/* Segmented control: the radio inputs stay in the page (the Kotlin code
-   reads them) and the labels are drawn as buttons. */
-
-.segmented {
-    position: relative;
-    display: flex;
+.segmented { 
+    position: relative; 
+    display: flex; 
+    gap: 8px; 
 }
-
-.segmented input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
+.segmented input { 
+    position: absolute; 
+    opacity: 0; 
+    pointer-events: none; 
 }
 
 .segmented label {
     flex: 1;
+    display: grid;
+    place-items: center;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 1px solid var(--outline);
-    font-weight: 500;
-    color: var(--on-surface);
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
-    user-select: none;
-    transition: background-color 150ms;
+}
+.segmented input:checked + label { 
+    background: var(--pop); 
+    color: var(--on-pop); 
+    box-shadow: 3px 3px 0 var(--ink);
+}
+.segmented input:focus-visible + label { 
+    outline: 3px solid var(--focus);
+    outline-offset: 2px; 
 }
 
-.segmented label:first-of-type {
-    border-radius: 20px 0 0 20px;
-}
-
-.segmented label:last-of-type {
-    margin-left: -1px;
-    border-radius: 0 20px 20px 0;
-}
-
-.segmented label:hover {
-    background-image: linear-gradient(
-        color-mix(in srgb, var(--on-surface) 8%, transparent),
-        color-mix(in srgb, var(--on-surface) 8%, transparent)
-    );
-}
-
-.segmented input:checked + label {
-    background-color: var(--secondary-container);
-    color: var(--on-secondary-container);
-}
-
-.segmented input:checked + label::before {
-    content: "";
-    width: 18px;
-    height: 18px;
-    background: currentColor;
-    -webkit-mask: var(--check) center / contain no-repeat;
-    mask: var(--check) center / contain no-repeat;
-}
-
-.segmented input:focus-visible + label {
-    position: relative;
-    z-index: 1;
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
-
-/* Outlined text field for the trigger key */
-
-.field {
-    position: relative;
-    margin-top: 8px;
+/* The label comes after the input in the HTML; column-reverse shows it above. */
+.field { 
+    position: relative; display: flex;
+    flex-direction: column-reverse; 
+    gap: 4px; 
 }
 
 #keyBox {
-    width: 100%;
-    height: 56px;
-    padding: 0 16px 0 52px;
-    border: 1px solid var(--outline);
+    height: 48px;
+    padding: 0 14px 0 46px;
+    background: var(--card);
+    color: var(--ink);
+    border: 2px solid var(--ink);
     border-radius: 12px;
-    background: transparent;
-    color: var(--on-surface);
     font: inherit;
-    font-size: 16px;
+    font-weight: 700;
     caret-color: transparent;
     cursor: pointer;
-    outline: none;
-    transition: border-color 150ms, box-shadow 150ms;
+}
+#keyBox::placeholder { 
+    color: var(--muted);
+    font-weight: 400; 
+}
+.field-icon { 
+    position: absolute; 
+    left: 14px; 
+    bottom: 12px; 
+    pointer-events: none; 
+}
+#keyBox:disabled, #keyBox:disabled ~ * { 
+    opacity: 0.45; 
+    cursor: not-allowed; 
+}
+.field-actions { 
+    display: flex; 
+    justify-content: flex-end; 
+    margin-top: -4px; 
 }
 
-#keyBox::placeholder {
-    color: var(--on-surface-variant);
-    font-size: 14px;
-    opacity: 1;
-}
-
-#keyBox:hover:not(:disabled) {
-    border-color: var(--on-surface);
-}
-
-#keyBox:focus {
-    border-color: var(--primary);
-    box-shadow: inset 0 0 0 1px var(--primary);
-}
-
-.field label {
-    position: absolute;
-    top: -8px;
-    left: 12px;
-    padding: 0 4px;
-    background: var(--surface);
-    font-size: 12px;
-    line-height: 16px;
-    color: var(--on-surface-variant);
-    pointer-events: none;
-}
-
-#keyBox:focus ~ label {
-    color: var(--primary);
-}
-
-.field-icon {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    color: var(--on-surface-variant);
-    pointer-events: none;
-}
-
-/* The key box is disabled in "All keys" mode */
-
-#keyBox:disabled {
-    cursor: not-allowed;
-    border-color: color-mix(in srgb, var(--on-surface) 38%, transparent);
-}
-
-#keyBox:disabled::placeholder,
-#keyBox:disabled ~ label,
-#keyBox:disabled ~ .field-icon {
-    color: color-mix(in srgb, var(--on-surface) 38%, transparent);
-}
-
-.field-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -4px;
-}
-
-/* Compact picker window (Firefox-based browsers) */
-/* Applies when the body has the "picker" class, which Main.kt adds. */
-
-body.picker {
+/* Compact picker window for Firefox (Main.kt adds the "picker" class to the body) */
+body.picker { 
     width: auto;
-    min-width: 280px;
+    min-width: 280px; 
 }
-
-body.picker #settings,
-body.picker #playButton {
-    display: none;
-}
-
-/* Motion */
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        transition: none !important;
-    }
-}
+body.picker #settings, body.picker #playButton { display: none; }
